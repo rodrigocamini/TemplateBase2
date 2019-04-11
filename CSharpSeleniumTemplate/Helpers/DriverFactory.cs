@@ -28,7 +28,17 @@ namespace CSharpSeleniumTemplate.Helpers
                     case "chrome":
                         if (execution.Equals("local"))
                         {
-                            INSTANCE = new ChromeDriver();
+                            ChromeOptions chrome = new ChromeOptions();
+                            chrome.AddArgument("start-maximized");
+                            chrome.AddArgument("enable-automation");
+                            chrome.AddArgument("--no-sandbox");
+                            chrome.AddArgument("--disable-infobars");
+                            chrome.AddArgument("--disable-dev-shm-usage");
+                            chrome.AddArgument("--disable-browser-side-navigation");
+                            chrome.AddArgument("--disable-gpu");
+                            chrome.PageLoadStrategy = PageLoadStrategy.Normal;
+                            INSTANCE = new ChromeDriver(chrome);
+
                         }
 
                         if (execution.Equals("remota"))
