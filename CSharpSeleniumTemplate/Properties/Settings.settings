@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="BROWSER" Type="System.String" Scope="User">
-      <Value Profile="(Default)">firefox</Value>
+      <Value Profile="(Default)">chrome</Value>
     </Setting>
     <Setting Name="EXECUTION" Type="System.String" Scope="User">
       <Value Profile="(Default)">local</Value>
