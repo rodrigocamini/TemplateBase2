@@ -38,7 +38,7 @@ namespace CSharpSeleniumTemplate.Helpers
 
         public static void AddTestInfo(int methodLevel, string text)
         {
-            TEST.Log(Status.Info, GeneralHelpers.GetMethodNameByLevel(methodLevel) + " || " + text);
+            TEST.Log(Status.Pass, GeneralHelpers.GetMethodNameByLevel(methodLevel) + " || " + text);
         }
 
         public static MediaEntityModelProvider GetScreenShotMedia()
