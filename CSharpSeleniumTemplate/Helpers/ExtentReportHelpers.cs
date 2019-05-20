@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,14 +15,26 @@ namespace CSharpSeleniumTemplate.Helpers
     {
         public static ExtentReports EXTENT_REPORT = null;
         public static ExtentTest TEST;
-        static string reportPath = Properties.Settings.Default.REPORT_PATH;
-        static string fileName = Properties.Settings.Default.REPORT_NAME + "_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm") + ".html";
+
+        static string reportName = Properties.Settings.Default.REPORT_NAME + "_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm");
+
+        static string projectBinDebugPath = AppDomain.CurrentDomain.BaseDirectory;
+        static FileInfo fileInfo = new FileInfo(projectBinDebugPath);
+        static DirectoryInfo projectFolder = fileInfo.Directory;
+        static string projectFolderPath = projectFolder.FullName;
+        static string reportRootPath = projectFolderPath + "/Reports/";
+        static string reportPath = projectFolderPath + "/Reports/" + reportName + "/";
+        static string fileName = reportName + ".html";
+        static string fullReportFilePath = reportPath + "_" + fileName;
 
         public static void CreateReport()
         {
             if (EXTENT_REPORT == null)
             {
-                var htmlReporter = new ExtentHtmlReporter(reportPath + fileName);
+                GeneralHelpers.EnsureDirectoryExists(reportRootPath);
+                GeneralHelpers.EnsureDirectoryExists(reportPath);
+
+                var htmlReporter = new ExtentHtmlReporter(fullReportFilePath);
                 EXTENT_REPORT = new ExtentReports();
                 EXTENT_REPORT.AttachReporter(htmlReporter);
                 htmlReporter.Configuration().ChartVisibilityOnOpen = false;
@@ -38,14 +51,14 @@ namespace CSharpSeleniumTemplate.Helpers
 
         public static void AddTestInfo(int methodLevel, string text)
         {
-            TEST.Log(Status.Info, GeneralHelpers.GetMethodNameByLevel(methodLevel) + " || " + text);
+            TEST.Log(Status.Pass, GeneralHelpers.GetMethodNameByLevel(methodLevel) + " || " + text);
         }
 
         public static MediaEntityModelProvider GetScreenShotMedia()
         {
             string screenshotPath = GeneralHelpers.GetScreenshot(reportPath);
 
-            return MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build();
+            return MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath.Replace(reportPath,".")).Build();
         }
 
         public static void AddTestResult()
