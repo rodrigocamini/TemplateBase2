@@ -90,5 +90,11 @@ namespace CSharpSeleniumTemplate.Helpers
         {
             return Guid.NewGuid().ToString();
         }
+
+        public static void EnsureDirectoryExists(string fullReportFilePath)
+        {
+            var directory = Path.GetDirectoryName(fullReportFilePath);
+            if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+        }
     }
 }

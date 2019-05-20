@@ -91,6 +91,7 @@ namespace CSharpSeleniumTemplate.Helpers
         public static void QuitInstace()
         {
             INSTANCE.Quit();
+            INSTANCE.Dispose();
             INSTANCE = null;
         }
     }

@@ -1,4 +1,4 @@
-﻿using CSharpSeleniumTemplate.Bases;
+using CSharpSeleniumTemplate.Bases;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
